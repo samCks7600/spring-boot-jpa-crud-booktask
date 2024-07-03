@@ -1,0 +1,29 @@
+Create a Book
+
+curl -X POST "http://localhost:9191/bookapi/books" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "bookName": "this is a book name",
+           "author": "Tony",
+           "publishDate": "2018-01-11",
+           "price": "40.00",
+           "ISBN": "978-0134685991"
+         }'
+
+curl -X POST "http://localhost:9191/bookapi/books" \  -H "Content-Type: application/json" \  -d "{  \"bookName\": \"here is a book name\",  \"author\": \"Tony\",  \"publishDate\": \"2018-01-11\",  \"price\": \"40.00\",  \"isbn\": \"9780134685991\"}"
+
+
+Get All Books
+curl -X GET "http://localhost:9191/bookapi/books"
+
+Get a Book by ID
+curl -X GET "http://localhost:9191/bookapi/books/13"
+
+Get Books by Author
+curl -X GET "http://localhost:9191/bookapi/books/author?author=Joshua%20Bloch"
+
+update Book
+curl -X PUT "http://localhost:9191/bookapi/books/2" \  -H "Content-Type: application/json" \  -d "{  \"bookName\": \"here is a edited book name\",  \"author\": \"Tony\",  \"publishDate\": \"2018-01-11\",  \"price\": \"40.00\",  \"isbn\": \"978023125991\"}"
+
+delete Book
+curl -X DELETE "http://localhost:9191/bookapi/books/13"
