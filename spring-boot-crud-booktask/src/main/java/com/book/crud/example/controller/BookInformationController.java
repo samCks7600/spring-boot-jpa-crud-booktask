@@ -11,34 +11,35 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/bookapi/books")
 public class BookInformationController {
 
     @Autowired
     private BookInformationService service;
 
-    @PostMapping("/create/book")
+    @PostMapping
     public ResponseEntity<BookInformation> addBook(@RequestBody BookInformation book) {
         return new ResponseEntity<>(service.saveBook(book), HttpStatus.CREATED);
     }
 
-    @GetMapping("/read/books")
+    @GetMapping
     public List<BookInformation> getAllBooks() {
         return service.getAllBooks();
     }
 
-    @GetMapping("/read/bookById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BookInformation> getBookById(@PathVariable int id) {
         Optional<BookInformation> book = service.getBookById(id);
         return book.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/read/booksByAuthor/{author}")
-    public List<BookInformation> getBooksByAuthor(@PathVariable String author) {
+    @GetMapping("/author")
+    public List<BookInformation> getBooksByAuthor(@RequestParam String author) {
         return service.getBooksByAuthor(author);
     }
 
-    @PutMapping("/update/book/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BookInformation> updateBook(@PathVariable int id, @RequestBody BookInformation book) {
         BookInformation updatedBook = service.updateBook(id, book);
         if (updatedBook != null) {
@@ -47,7 +48,7 @@ public class BookInformationController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/delete/book/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable int id) {
         service.deleteBook(id);
         return ResponseEntity.noContent().build();
